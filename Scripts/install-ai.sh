@@ -118,3 +118,7 @@ erazor-ai pentest --help
 erazor-ai pentest --scan 192.168.1.0/24
 # Threat Analysis
 erazor-ai threat --analyze malware.bin
+# Scripting Help
+erazor-ai script --help python
+# Attack Prediction
+erazor-ai predict --attack ransomware
