@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  erazor:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: erazor:latest
+    container_name: erazor-main
+    
+    # Volumes for persistent data
+    volumes:
+      - erazor-data:/data
+      - erazor-config:/opt/erazor/config
+      - erazor-ai:/opt/erazor/ai-assistant
+    
+    # Resource limits (adjust for your VM)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    
+    # Networking
+    networks:
+      - erazor-network
+    
+    # Interactive terminal
+    stdin_open: true
+    tty: true
+    
+    # Privileged mode (required for some security tools)
+    # Uncomment if needed, but use with caution
+    # privileged: true
+    
+    # Environment variables
+    environment:
+      - ERAZOR_ENV=container
+      - ERAZOR_VERSION=0.1.0-alpha
+      - LANG=en_US.UTF-8
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  erazor-data:
+    driver: local
+  erazor-config:
+    driver: local
+  erazor-ai:
+    driver: local
+
+networks:
+  erazor-network:
+    driver: bridge
