@@ -122,3 +122,9 @@ erazor-ai threat --analyze malware.bin
 erazor-ai script --help python
 # Attack Prediction
 erazor-ai predict --attack ransomware
+# Configuration
+Edit /opt/erazor/config/ai-config.yaml to customize behavior.
+# Troubleshooting
+ If Ollama service isn't running:
+sudo systemctl start ollama
+sudo systemctl status ollama
