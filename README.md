@@ -136,3 +136,44 @@ See ROADMAP.md for detailed timeline.
 🔒 Security Best Practices
 🤖 AI Assistant Usage
 🐛 Troubleshooting
+
+# System Requirements
+Component	Minimum	Recommended
+CPU	2 cores	4+ cores
+RAM	2GB	4GB+
+Disk	15GB	25GB+
+Platform	x86_64	x86_64
+Docker	20.10+	24.0+
+Contributing
+We welcome contributions! Please:
+
+# Fork the repository
+Create a feature branch (git checkout -b feature/amazing-feature)
+Commit your changes (git commit -m 'Add amazing feature')
+Push to the branch (git push origin feature/amazing-feature)
+Open a Pull Request
+See CONTRIBUTING.md (coming soon) for guidelines.
+
+# Security Notice
+⚠️ Important: eRazOR is designed for authorized security testing only. Unauthorized access to computer systems is illegal. Always obtain proper authorization before conducting any security assessments.
+
+# License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+# Acknowledgments
+Kali Linux - For providing an excellent penetration testing platform
+Black Arch - For modular tool management approach
+Ollama - For local LLM inference
+Mistral AI - For the lightweight language model
+The Open Source Community - For countless tools and resources
+
+# Support & Contact
+📧 Email: support@erazor-project.com (coming soon)
+💬 GitHub Issues: Report bugs here
+📚 Documentation: Full docs
+🐦 Twitter: @eRazORProject (coming soon)
+
+# Disclaimer
+eRazOR is provided as-is for educational and authorized security testing purposes. Users are responsible for complying with all applicable laws and regulations. The developers and contributors are not responsible for any misuse or damage caused by this software.
+
+Last Updated: 2026-03-19 Version: 0.1.0-alpha (In Development) Maintainer: @Georgejomanga
