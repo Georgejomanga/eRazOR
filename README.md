@@ -103,5 +103,13 @@ SELinux ready
 Firewall configuration templates
 Network isolation guides
 Security audit tools pre-configured
+
 Installation Methods
 Method 1: Docker Container (Recommended)
+docker-compose up -d
+docker-compose exec erazor bash
+
+Method 2: Manual Setup (Advanced)
+Follow the Installation Guide
+AI Assistant Usage
+Start the AI Assistant
