@@ -121,3 +121,18 @@ erazor-ai pentest --scan 192.168.1.100   # Start pen-testing workflow
 erazor-ai threat --analyze malware.bin   # Analyze threats
 erazor-ai script --help python            # Get Python scripting help
 erazor-ai predict --attack ransomware    # Predict attack vectors
+
+# Project Roadmap
+Phase	Timeline	Status
+Phase 1: Foundation	Weeks 1-2	🟡 In Progress
+Phase 2: Tool Management	Weeks 3-4	⏳ Planned
+Phase 3: AI Assistant	Weeks 5-7	⏳ Planned
+Phase 4: Polish & Testing	Week 8	⏳ Planned
+See ROADMAP.md for detailed timeline.
+
+# Documentation
+📖 Installation Guide
+🎓 Beginners Guide
+🔒 Security Best Practices
+🤖 AI Assistant Usage
+🐛 Troubleshooting
