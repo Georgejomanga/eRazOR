@@ -111,3 +111,8 @@ cat > /opt/erazor/docs/AI_QUICKSTART.md << 'EOF'
 
 ```bash
 erazor-ai
+
+Common Commands
+# Penetration Testing Help
+erazor-ai pentest --help
+erazor-ai pentest --scan 192.168.1.0/24
