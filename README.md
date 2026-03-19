@@ -40,6 +40,8 @@ docker build -f docker/Dockerfile -t erazor:latest .
 # Run the container
 docker-compose up -d
 eRazOR/
+
+## Project Structure
 ├── README.md                 # This file
 ├── ROADMAP.md               # Feature roadmap & timeline
 ├── docker/                  # Container definitions
@@ -75,3 +77,31 @@ eRazOR/
     ├── vulnerability-scanning.txt
     ├── exploitation.txt
     └── post-exploitation.txt
+
+Core Features
+1. AI-Powered Security Assistant
+Local inference (Ollama + Mistral 7B)
+Penetration testing workflow guidance
+Threat analysis and prediction
+Counter-attack suggestions
+Scripting assistance for security tasks
+2. Modular Tool Management
+Lightweight base installation
+Selective tool installation by category
+Automated tool updates
+Dependency management
+Tool version tracking
+3. Beginner-Friendly Design
+Interactive setup wizard
+In-depth documentation
+Safety warnings and best practices
+Video tutorials (planned)
+Community support
+4. Security Hardening
+Hardened system defaults
+SELinux ready
+Firewall configuration templates
+Network isolation guides
+Security audit tools pre-configured
+Installation Methods
+Method 1: Docker Container (Recommended)
