@@ -1,1 +1,253 @@
+version: '3.8'
 
+# eRazOR Docker Compose - Enhanced with Compartmentalization & Privacy
+# Supports multiple compartments for isolated testing environments
+# QubesOS-inspired architecture for security domains
+
+services:
+  # Main eRazOR container - pentesting and analysis
+  erazor:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        TARGETARCH: ${TARGETARCH:-amd64}
+    image: erazor:latest
+    container_name: erazor-main
+    
+    # Compartmentalization: Isolated network
+    networks:
+      erazor-network:
+        ipv4_address: 172.28.0.2
+    
+    # Resource limits (optimized for VMs)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 3G
+        reservations:
+          cpus: '1'
+          memory: 2G
+    
+    # Volumes for compartmentalization
+    volumes:
+      - erazor-data:/data
+      - erazor-config:/opt/erazor/config
+      - erazor-ai:/opt/erazor/ai-assistant
+      - erazor-compartments:/opt/erazor/compartments
+      - /var/lib/tor:/var/lib/tor  # TOR isolation
+    
+    # Security options (compartmentalization)
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - NET_ADMIN  # For network testing only
+    security_opt:
+      - no-new-privileges:true
+    
+    # Interactive terminal
+    stdin_open: true
+    tty: true
+    
+    # Environment variables for privacy focus
+    environment:
+      - ERAZOR_ENV=container
+      - ERAZOR_VERSION=0.1.0-alpha
+      - ERAZOR_PRIVACY_MODE=true
+      - ERAZOR_COMPARTMENTALIZATION=enabled
+      - LANG=en_US.UTF-8
+      - TZ=UTC  # Use UTC to minimize tracking
+    
+    # Logging (minimal to preserve privacy)
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "erazor=main"
+
+  # =====================================================================
+  # COMPARTMENT: AI Assistant Service (Isolated)
+  # =====================================================================
+  erazor-ai-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: erazor:latest
+    container_name: erazor-ai-isolated
+    
+    networks:
+      erazor-network:
+        ipv4_address: 172.28.0.3
+    
+    # Lightweight resource allocation
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    
+    volumes:
+      - erazor-ai:/opt/erazor/ai-assistant
+      - ai-cache:/home/aiservice/.cache
+    
+    # Strict security for AI service
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    
+    user: "aiservice"
+    
+    environment:
+      - ERAZOR_SERVICE=ai-assistant
+      - ERAZOR_PRIVACY_MODE=true
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+  # =====================================================================
+  # COMPARTMENT: Network Testing Service (Isolated)
+  # =====================================================================
+  erazor-network-service:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: erazor:latest
+    container_name: erazor-network-isolated
+    
+    networks:
+      erazor-network:
+        ipv4_address: 172.28.0.4
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    
+    volumes:
+      - erazor-data:/data
+      - network-results:/home/networking/results
+    
+    # Network testing requires some capabilities
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    security_opt:
+      - no-new-privileges:true
+    
+    user: "networking"
+    
+    environment:
+      - ERAZOR_SERVICE=network-testing
+      - ERAZOR_PRIVACY_MODE=true
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+  # =====================================================================
+  # OPTIONAL: TOR Privacy Service (Anonymous Operations)
+  # =====================================================================
+  erazor-tor-service:
+    image: alpine:latest
+    container_name: erazor-tor
+    networks:
+      erazor-network:
+        ipv4_address: 172.28.0.5
+    
+    # Lightweight TOR service
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    
+    volumes:
+      - tor-data:/var/lib/tor
+    
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    
+    environment:
+      - TZ=UTC
+    
+    entrypoint: /bin/sh -c "apk add --no-cache tor privoxy && \
+                             sed -i 's/SocksPort 9050/SocksPort 0.0.0.0:9050/' /etc/tor/torrc && \
+                             tor"
+    
+    # Expose TOR ports only to erazor-network
+    expose:
+      - "9050"
+      - "9051"
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+
+# =====================================================================
+# VOLUMES: Compartmentalization & Data Isolation
+# =====================================================================
+
+volumes:
+  erazor-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data
+  
+  erazor-config:
+    driver: local
+  
+  erazor-ai:
+    driver: local
+  
+  erazor-compartments:
+    driver: local
+  
+  ai-cache:
+    driver: local
+  
+  network-results:
+    driver: local
+  
+  tor-data:
+    driver: local
+
+# =====================================================================
+# NETWORKS: Compartmentalization Architecture
+# =====================================================================
+
+networks:
+  erazor-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          gateway: 172.28.0.1
