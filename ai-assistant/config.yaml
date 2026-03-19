@@ -1,1 +1,279 @@
+# eRazOR AI Assistant Configuration
+# Enhanced with Privacy Focus, Resource Efficiency & User-Friendliness
 
+# System Information
+system:
+  name: "eRazOR AI Assistant"
+  version: "0.1.0-alpha"
+  focus: "Privacy-First, Lightweight, User-Friendly"
+
+# ============================================================================
+# OLLAMA CONFIGURATION (Local LLM - No Cloud, No Tracking)
+# ============================================================================
+ollama:
+  # Local inference = privacy by design
+  host: "http://localhost:11434"
+  model: "mistral:7b"          # Lightweight 7B model
+  
+  # Model parameters for balance between quality and speed
+  temperature: 0.7             # 0.0 = focused, 1.0 = creative
+  top_p: 0.9                   # Nucleus sampling
+  top_k: 40                    # Top-k filtering
+  repeat_penalty: 1.1
+  
+  # Context window - lower for faster processing on limited resources
+  context_length: 2048         # Reduce from 4096 for resource efficiency
+  
+  # Local processing only - no external calls
+  local_only: true
+  process_timeout: 120         # 2 minute timeout for safety
+
+# ============================================================================
+# PRIVACY SETTINGS
+# ============================================================================
+privacy:
+  mode: "enhanced"
+  
+  # No data collection
+  collect_analytics: false
+  send_telemetry: false
+  log_queries: false           # Keep logs local and private
+  
+  # Data handling
+  clear_cache_on_exit: true
+  encrypt_local_data: true
+  minimal_metadata: true
+  
+  # Network privacy
+  use_tor: false               # Enable if compartment setup enabled TOR
+  tor_socks_proxy: "127.0.0.1:9050"
+  dns_over_tor: false
+  
+  # Sensitive data handling
+  mask_ip_addresses: true
+  mask_usernames: true
+  mask_file_paths: true
+
+# ============================================================================
+# USER EXPERIENCE - FRIENDLY & INTUITIVE
+# ============================================================================
+user_experience:
+  language: "en"
+  
+  # Interactive mode = friendlier
+  interactive_mode: true
+  show_progress: true
+  use_colors: true
+  verbose_output: true
+  
+  # Help & guidance
+  auto_suggestions: true
+  explain_commands: true
+  provide_examples: true
+  
+  # Confirmation for dangerous operations
+  confirm_dangerous_actions: true
+  show_warnings: true
+
+# ============================================================================
+# RESOURCE EFFICIENCY - Lightweight Configuration
+# ============================================================================
+performance:
+  # Lightweight settings for VM environments
+  max_concurrent_requests: 1   # Sequential processing (resource efficient)
+  cache_responses: true
+  cache_ttl: 1800              # 30 minutes
+  
+  # Memory optimization
+  compress_cache: true
+  lazy_load_models: true
+  
+  # Processing optimization
+  batch_processing: false      # Process one request at a time
+  max_tokens: 1024             # Limit response length
+  timeout: 120                 # seconds
+  
+  # CPU optimization
+  num_threads: 2               # Adjust based on system
+  use_gpu: false               # Most VMs don't have GPU
+
+# ============================================================================
+# MODULE CONFIGURATION
+# ============================================================================
+modules:
+  pen_testing:
+    enabled: true
+    max_suggestions: 3         # Reduced for clarity
+    threat_database: "/data/threat_db"
+    provide_examples: true
+    explain_each_step: true
+    
+  threat_analyzer:
+    enabled: true
+    analysis_depth: "medium"   # low, medium, high
+    provide_mitigation: true
+    
+  attack_predictor:
+    enabled: true
+    prediction_confidence: 0.7
+    counter_measures: true     # Show defense strategies
+    
+  scripting_helper:
+    enabled: true
+    supported_languages:
+      - python
+      - bash
+      - powershell
+      - ruby
+    include_comments: true     # Well-commented code
+    error_handling: true
+
+# ============================================================================
+# SECURITY SETTINGS
+# ============================================================================
+security:
+  # Authorization & access control
+  require_authorization: true
+  enforce_compartmentalization: true
+  
+  # Logging and monitoring
+  log_all_queries: false       # Privacy first
+  log_sensitive_operations: true
+  log_retention_days: 7        # Auto-delete old logs
+  
+  # Sensitive data protection
+  sensitive_data_masking: true
+  mask_passwords: true
+  mask_api_keys: true
+  mask_tokens: true
+  
+  # Output limits
+  max_output_length: 4000
+  max_response_size: "10MB"
+
+# ============================================================================
+# COMPARTMENTALIZATION SETTINGS (QubesOS-inspired)
+# ============================================================================
+compartmentalization:
+  enabled: true
+  strict_mode: true
+  
+  # Compartment management
+  isolation_level: "strict"
+  network_isolation: true
+  filesystem_isolation: true
+  
+  # Cross-compartment communication
+  inter_compartment_access: "forbidden"
+  data_sharing: "none"
+  
+  # Disposable compartments
+  auto_cleanup_disposable: true
+  disposable_ttl: "24h"
+  force_cleanup_on_compromise: true
+
+# ============================================================================
+# LOGGING - Privacy-Preserving
+# ============================================================================
+logging:
+  level: "INFO"                # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  
+  # Log file management
+  file: "/var/log/erazor-ai.log"
+  max_size: "5MB"              # Smaller logs for privacy
+  backup_count: 3
+  
+  # Privacy in logs
+  disable_query_logging: true
+  disable_parameter_logging: true
+  
+  # Auto-cleanup
+  auto_delete_logs: true
+  retention_days: 7
+
+# ============================================================================
+# HARDWARE COMPATIBILITY
+# ============================================================================
+hardware:
+  # Auto-detect and adapt to available resources
+  auto_optimize: true
+  
+  # CPU settings
+  cpu_cores: "auto"            # Auto-detect
+  cpu_limit: 2                 # Max 2 cores for VM
+  
+  # Memory settings
+  memory_limit: "2GB"          # Lightweight
+  swap_allowed: true
+  
+  # Storage
+  disk_cache: true
+  cache_path: "/tmp/erazor-cache"
+  cache_max_size: "500MB"
+  
+  # Architecture support
+  supported_archs:
+    - amd64
+    - arm64
+    - armv7
+
+# ============================================================================
+# MODERN FEATURES
+# ============================================================================
+modern_features:
+  # AI enhancements
+  context_awareness: true
+  learning_from_interactions: false  # Privacy first - don't learn user patterns
+  
+  # User interface
+  progress_bars: true
+  colored_output: true
+  emoji_support: true
+  
+  # Advanced capabilities
+  code_highlighting: true
+  markdown_support: true
+  json_output: true
+  
+  # Accessibility
+  accessibility_mode: false
+  screen_reader_compatible: true
+
+# ============================================================================
+# PATHS & DIRECTORIES
+# ============================================================================
+paths:
+  data_dir: "/data"
+  project_dir: "/data/projects"
+  wordlist_dir: "/data/wordlists"
+  payload_dir: "/data/payloads"
+  config_dir: "/opt/erazor/config"
+  log_dir: "/var/log"
+  cache_dir: "/tmp/erazor-cache"
+  
+  # Compartment paths
+  compartment_base: "/opt/erazor/compartments"
+  isolation_dir: "/opt/erazor/compartments/.isolated"
+
+# ============================================================================
+# DEVELOPMENT & DEBUGGING
+# ============================================================================
+development:
+  debug_mode: false
+  verbose_errors: false
+  show_stack_traces: false
+  
+  # Testing
+  test_mode: false
+  mock_responses: false
+
+# ============================================================================
+# FUTURE ENHANCEMENTS (Planned for v0.2.0+)
+# ============================================================================
+future:
+  machine_learning: false      # Coming soon
+  advanced_analytics: false    # Coming soon
+  web_interface: false         # Coming soon
+  multi_user_support: false    # Coming soon
+  api_endpoint: false          # Coming soon
+  database_integration: false  # Coming soon
