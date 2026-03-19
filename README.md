@@ -78,7 +78,7 @@ eRazOR/
     ├── exploitation.txt
     └── post-exploitation.txt
 
-Core Features
+# Core Features
 1. AI-Powered Security Assistant
 Local inference (Ollama + Mistral 7B)
 Penetration testing workflow guidance
@@ -104,7 +104,7 @@ Firewall configuration templates
 Network isolation guides
 Security audit tools pre-configured
 
-Installation Methods
+# Installation Methods
 Method 1: Docker Container (Recommended)
 docker-compose up -d
 docker-compose exec erazor bash
@@ -112,4 +112,12 @@ docker-compose exec erazor bash
 Method 2: Manual Setup (Advanced)
 Follow the Installation Guide
 AI Assistant Usage
-Start the AI Assistant
+# Start the AI Assistant
+erazor-ai
+
+# Example Commands
+erazor-ai --help                          # Show help
+erazor-ai pentest --scan 192.168.1.100   # Start pen-testing workflow
+erazor-ai threat --analyze malware.bin   # Analyze threats
+erazor-ai script --help python            # Get Python scripting help
+erazor-ai predict --attack ransomware    # Predict attack vectors
