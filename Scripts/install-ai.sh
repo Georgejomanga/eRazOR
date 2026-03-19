@@ -128,3 +128,11 @@ Edit /opt/erazor/config/ai-config.yaml to customize behavior.
  If Ollama service isn't running:
 sudo systemctl start ollama
 sudo systemctl status ollama
+# If model isn't loaded:
+ollama pull mistral:7b
+
+EOF print_success "Quick start guide created"
+
+print_header "AI Assistant Installation Complete!" echo -e "${GREEN}" echo "════════════════════════════════════════" echo "✓ Ollama installed and running" echo "✓ Mistral 7B model ready" echo "✓ AI assistant configured" echo "✓ erazor-ai command available" echo "════════════════════════════════════════" echo -e "${NC}"
+
+print_warning "First run will take a moment as Ollama loads the model." echo -e "\n${BLUE}Next step: Run 'erazor-ai --help' to get started${NC}\n"
